@@ -14,6 +14,22 @@
 $( document ).ready(function() {
 	//create map
 	var map = new google.maps.Map(mapElem, mapOptions);
+
+	//get JSON for traffic cams
+	$.getJSON('http://data.seattle.gov/resource/65fc-btcc.json')
+	.done(function(data) {
+		//success
+		console.log(data);
+		createMarker(data);
+	})
+	.fail(function(error){
+		//error contains error info
+		console.log(error);
+		$("p").append("Failed to load traffic cameras");
+	})
+	.always(function() {
+		//called on either success or error cases
+	})
 });
 
 var mapOptions = {
@@ -24,5 +40,30 @@ var mapOptions = {
 //adds map to page in "map" div
 var mapElem = document.getElementById('map');
 
+//var imgContent;
+
 //creates an InfoWindow
 var infoWin = new google.maps.InfoWindow();
+
+//for each object in traffic cams, create a marker at location
+
+function createMarker (trafficCams) {
+	console.log("going to create a marker");
+	//go through all of the traffic cams
+	for (var i = 0; i < trafficCams.length; i++) {
+		console.log("entered for loop");
+		//get new position from camera
+		var position = {
+			//console.log(trafficCams[i]);
+			lng: trafficCams[i].xpos,
+			lat: trafficCams[i].ypos
+		};
+		console.log("postion:");
+		console.log(postion);
+		//creates a new marker
+		var marker = new google.maps.Marker({
+			position: position,
+			map: map
+		});
+	};
+}
