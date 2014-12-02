@@ -50,23 +50,6 @@ var infoWin = new google.maps.InfoWindow();
 function createMarker(trafficCams) {
 	console.log("going to create a marker");
 	//go through all of the traffic cams
-	/*for (var i = 0; i < trafficCams.length; i++) {
-		console.log("entered for loop");
-		//get new position from camera
-		var position = {
-			//console.log(trafficCams[i]);
-			lng: trafficCams[i].xpos,
-			lat: trafficCams[i].ypos
-		};
-		console.log("postion:");
-		console.log(postion);
-		//creates a new marker
-		var marker = new google.maps.Marker({
-			position: position,
-			map: map
-		});
-	};*/
-
 	$(trafficCams).each(function (i, cam) {
 		console.log("entered for loop");
 		console.log(cam);
