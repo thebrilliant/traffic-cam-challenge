@@ -20,7 +20,7 @@ $(document).ready(function() {
 	.done(function(data) {
 		//success
 		console.log(data);
-		createMarker(data);
+		createMarker(data, map);
 	})
 	.fail(function(error){
 		//error contains error info
@@ -45,10 +45,15 @@ var mapElem = document.getElementById('map');
 //creates an InfoWindow
 var infoWin = new google.maps.InfoWindow();
 
-//for each object in traffic cams, create a marker at location
+function makeInfoWin() {
+	console.log("method called!");
+	infoWin.open(map, this);
+}
 
-function createMarker(trafficCams) {
+//for each object in traffic cams, create a marker at location
+function createMarker(trafficCams, mapObj) {
 	console.log("going to create a marker");
+
 	//go through all of the traffic cams
 	$(trafficCams).each(function (i, cam) {
 		console.log("entered for loop");
@@ -62,15 +67,25 @@ function createMarker(trafficCams) {
 			lng: longitude
 		};
 		console.log(cam.location.longitude);
-		console.log("postion:");
-		//console.log(postion);
-		//console.log($(this).xpos);
-		//console.log($(this).ypos);
+		console.log("position:");
+		console.log(position);
 
 		//creates a new marker
 		var marker = new google.maps.Marker({
-			position: {lat: latitude, lng: longitude},
-			map: map
+			position: position,
+			map: mapObj
 		});
+
+		//set the info window content
+		infoWin.setContent(
+			cam.cameralabel
+			+ '<br />'
+			+ '<img>'
+			+ cam.imageurl.url
+			+ '</img>'
+		);
+
+		google.maps.event.addListener(position, 'click', makeInfoWin);
 	});
 }
+
