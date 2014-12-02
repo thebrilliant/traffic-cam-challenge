@@ -11,7 +11,7 @@
 //you should also write the code to filter the set of markers when the user
 //types a search phrase into the search box
 
-$( document ).ready(function() {
+$(document).ready(function() {
 	//create map
 	var map = new google.maps.Map(mapElem, mapOptions);
 
@@ -47,10 +47,10 @@ var infoWin = new google.maps.InfoWindow();
 
 //for each object in traffic cams, create a marker at location
 
-function createMarker (trafficCams) {
+function createMarker(trafficCams) {
 	console.log("going to create a marker");
 	//go through all of the traffic cams
-	for (var i = 0; i < trafficCams.length; i++) {
+	/*for (var i = 0; i < trafficCams.length; i++) {
 		console.log("entered for loop");
 		//get new position from camera
 		var position = {
@@ -65,5 +65,29 @@ function createMarker (trafficCams) {
 			position: position,
 			map: map
 		});
-	};
+	};*/
+
+	$(trafficCams).each(function (i, cam) {
+		console.log("entered for loop");
+		console.log(cam);
+
+		var longitude = Number(cam.location.longitude);
+		var latitude = Number(cam.location.latitude);
+		//get new position from camera
+		var position = {
+			lat: latitude,
+			lng: longitude
+		};
+		console.log(cam.location.longitude);
+		console.log("postion:");
+		//console.log(postion);
+		//console.log($(this).xpos);
+		//console.log($(this).ypos);
+
+		//creates a new marker
+		var marker = new google.maps.Marker({
+			position: {lat: latitude, lng: longitude},
+			map: map
+		});
+	});
 }
