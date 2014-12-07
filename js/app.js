@@ -20,27 +20,6 @@ $(document).ready(function() {
 	.done(function(data) {
 		//success
 		console.log(data);
-		/*console.log("going to create a marker");
-		//go through all of the traffic cams
-		for (var i = 0; i < data.length; i++) {
-			console.log("entered for loop");
-			//get new position from camera
-			var position = {
-				//console.log(data[i]);
-				lng: data[i].xpos,
-				lat: data[i].ypos
-			};
-			console.log(data[i].xpos);
-			console.log("postion:");
-			console.log(postion);
-			//creates a new marker
-			var marker = new google.maps.Marker({
-				position: position,
-				map: map
-			});
-		};
-		//createMarker(data);
-=======*/
 		createMarker(data, map);
 	})
 	.fail(function(error){
@@ -77,8 +56,8 @@ function createMarker(trafficCams, mapObj) {
 
 	//go through all of the traffic cams
 	$(trafficCams).each(function (i, cam) {
-		console.log("entered for loop");
-		console.log(cam);
+		//console.log("entered for loop");
+		//console.log(cam);
 
 		var longitude = Number(cam.location.longitude);
 		var latitude = Number(cam.location.latitude);
@@ -87,9 +66,9 @@ function createMarker(trafficCams, mapObj) {
 			lat: latitude,
 			lng: longitude
 		};
-		console.log(cam.location.longitude);
-		console.log("position:");
-		console.log(position);
+		//console.log(cam.location.longitude);
+		//console.log("position:");
+		//console.log(position);
 
 		//creates a new marker
 		var marker = new google.maps.Marker({
@@ -106,7 +85,8 @@ function createMarker(trafficCams, mapObj) {
 			+ '</img>'
 		);
 
+		//opens new infoWindow when marker is clicked
 		google.maps.event.addListener(position, 'click', makeInfoWin);
 	});
-}
+}//end of createMarker
 
