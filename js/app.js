@@ -11,7 +11,7 @@
 //you should also write the code to filter the set of markers when the user
 //types a search phrase into the search box
 
-$( document ).ready(function() {
+$(document).ready(function() {
 	//create map
 	var map = new google.maps.Map(mapElem, mapOptions);
 
@@ -20,6 +20,7 @@ $( document ).ready(function() {
 	.done(function(data) {
 		//success
 		console.log(data);
+<<<<<<< HEAD
 		console.log("going to create a marker");
 		//go through all of the traffic cams
 		for (var i = 0; i < data.length; i++) {
@@ -40,6 +41,9 @@ $( document ).ready(function() {
 			});
 		};
 		//createMarker(data);
+=======
+		createMarker(data, map);
+>>>>>>> FETCH_HEAD
 	})
 	.fail(function(error){
 		//error contains error info
@@ -64,26 +68,53 @@ var mapElem = document.getElementById('map');
 //creates an InfoWindow
 var infoWin = new google.maps.InfoWindow();
 
-//for each object in traffic cams, create a marker at location
+function makeInfoWin() {
+	console.log("method called!");
+	infoWin.open(map, this);
+}
 
-function createMarker (trafficCams) {
+//for each object in traffic cams, create a marker at location
+function createMarker(trafficCams, mapObj) {
 	console.log("going to create a marker");
+
 	//go through all of the traffic cams
-	for (var i = 0; i < trafficCams.length; i++) {
+	$(trafficCams).each(function (i, cam) {
 		console.log("entered for loop");
+		console.log(cam);
+
+		var longitude = Number(cam.location.longitude);
+		var latitude = Number(cam.location.latitude);
 		//get new position from camera
 		var position = {
-			//console.log(trafficCams[i]);
-			lng: trafficCams[i].xpos,
-			lat: trafficCams[i].ypos
+			lat: latitude,
+			lng: longitude
 		};
+<<<<<<< HEAD
 		console.log(trafficCams[i].xpos);
 		console.log("postion:");
 		console.log(postion);
+=======
+		console.log(cam.location.longitude);
+		console.log("position:");
+		console.log(position);
+
+>>>>>>> FETCH_HEAD
 		//creates a new marker
 		var marker = new google.maps.Marker({
 			position: position,
-			map: map
+			map: mapObj
 		});
-	};
+
+		//set the info window content
+		infoWin.setContent(
+			cam.cameralabel
+			+ '<br />'
+			+ '<img>'
+			+ cam.imageurl.url
+			+ '</img>'
+		);
+
+		google.maps.event.addListener(position, 'click', makeInfoWin);
+	});
 }
+
