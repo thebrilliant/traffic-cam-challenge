@@ -20,7 +20,26 @@ $( document ).ready(function() {
 	.done(function(data) {
 		//success
 		console.log(data);
-		createMarker(data);
+		console.log("going to create a marker");
+		//go through all of the traffic cams
+		for (var i = 0; i < data.length; i++) {
+			console.log("entered for loop");
+			//get new position from camera
+			var position = {
+				//console.log(data[i]);
+				lng: data[i].xpos,
+				lat: data[i].ypos
+			};
+			console.log(data[i].xpos);
+			console.log("postion:");
+			console.log(postion);
+			//creates a new marker
+			var marker = new google.maps.Marker({
+				position: position,
+				map: map
+			});
+		};
+		//createMarker(data);
 	})
 	.fail(function(error){
 		//error contains error info
@@ -58,6 +77,7 @@ function createMarker (trafficCams) {
 			lng: trafficCams[i].xpos,
 			lat: trafficCams[i].ypos
 		};
+		console.log(trafficCams[i].xpos);
 		console.log("postion:");
 		console.log(postion);
 		//creates a new marker
