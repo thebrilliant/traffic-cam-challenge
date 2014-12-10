@@ -90,7 +90,7 @@ $(document).ready(function() {
 				console.log(this);
 				console.log("event:");
 				console.log(evt);
-				var searchString = "placeholder";//search.toLowerCase();
+				var searchString = "placeholder"; //input.toLowerCase();
 				var camName = cam.cameralabel.toLowerCase();
 				if (camName.indexOf(searchString) == -1) {
 					//remove marker from map if it doesn't contain search string
