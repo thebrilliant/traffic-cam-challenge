@@ -85,6 +85,22 @@ $(document).ready(function() {
 				map.panTo(this.getPosition());
 				infoWin.open(map, this);
 			});
+			$('#search').bind('search keyup', function (evt) {
+				console.log("search:");
+				console.log(this);
+				console.log("event:");
+				console.log(evt);
+				var searchString = "placeholder";//search.toLowerCase();
+				var camName = cam.cameralabel.toLowerCase();
+				if (camName.indexOf(searchString) == -1) {
+					//remove marker from map if it doesn't contain search string
+					marker.setMap(null);
+				} else if (marker == null) {
+					//read the marker back onto map
+					marker.setMap(map);
+				};
+			});
 		}); //end of for each loop
 	}//end of createMarker
 });
+
