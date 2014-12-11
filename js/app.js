@@ -18,6 +18,7 @@ $(document).ready(function() {
 	//creates an InfoWindow
 	var infoWin = new google.maps.InfoWindow();
 
+	//set map options
 	var mapOptions = {
 		center: {lat: 47.6, lng: -122.3},
 		zoom: 12
@@ -32,6 +33,7 @@ $(document).ready(function() {
 		//success
 		console.log(data);
 		createMarker(data, map);
+		//searchMarkers();
 	})
 	.fail(function(error){
 		//error contains error info
@@ -53,6 +55,7 @@ $(document).ready(function() {
 			//console.log("entered for loop");
 			//console.log(cam);
 
+			//gets latitude and longitude of camera as numbers
 			var longitude = Number(cam.location.longitude);
 			var latitude = Number(cam.location.latitude);
 			//get new position from camera
@@ -85,13 +88,17 @@ $(document).ready(function() {
 				map.panTo(this.getPosition());
 				infoWin.open(map, this);
 			});
-			$('#search').bind('search keyup', function (evt) {
+			$('#search').bind('search keyup', function (search) {
 				console.log("search:");
 				console.log(this);
 				console.log("event:");
-				console.log(evt);
-				var searchString = "placeholder"; //input.toLowerCase();
+				console.log(search); //I can't get access to the search string....
+				var searchString = "I-5".toLowerCase();
+				var searchLength = searchString.length;
 				var camName = cam.cameralabel.toLowerCase();
+				if (searchLength = 0) {
+					marker.setMap(map);
+				};
 				if (camName.indexOf(searchString) == -1) {
 					//remove marker from map if it doesn't contain search string
 					marker.setMap(null);
