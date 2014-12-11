@@ -88,15 +88,29 @@ $(document).ready(function() {
 				map.panTo(this.getPosition());
 				infoWin.open(map, this);
 			});
+			var searchString = ""; //start search string so i can add onto it
 			$('#search').bind('search keyup', function (search) {
 				console.log("search:");
 				console.log(this);
 				console.log("event:");
-				console.log(search); //I can't get access to the search string....
-				var searchString = "I-5".toLowerCase();
+				console.log(search.keyCode);
 				var searchLength = searchString.length;
+				if (search.keyCode >= 32 && search.keyCode != 127 && search.keyCode != 173) {
+					searchString = searchString + String.fromCharCode(search.keyCode);
+				} else if (search.keyCode == 8 || search.keyCode == 127) {
+					console.log("reached backspace");
+					searchString = searchString.substring(0, searchString.length - 1);
+				} else if (search.keyCode == 13) {
+					console.log("reached enter");
+					searchString = searchString + "";
+				} else if (search.keyCode == 173) {
+					searchString = searchString + "-";
+				};
+				searchString = searchString.toLowerCase();
+				console.log(searchString);
+				searchLength = searchString.length;
 				var camName = cam.cameralabel.toLowerCase();
-				if (searchLength = 0) {
+				if (searchLength == 0) {
 					marker.setMap(map);
 				};
 				if (camName.indexOf(searchString) == -1) {
@@ -106,8 +120,8 @@ $(document).ready(function() {
 					//read the marker back onto map
 					marker.setMap(map);
 				};
-			});
+			}); //end of search event
 		}); //end of for each loop
-	}//end of createMarker
+	} //end of createMarker
 });
 
